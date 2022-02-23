@@ -11,8 +11,8 @@ builder.Services.AddSingleton<SingletonService>();
 builder.Services.AddScoped<ScopedService>();
 builder.Services.AddTransient<TransientService>();
 builder.Services.AddTransient<IServiceInterface, ServiceWithInterface>();
-builder.Services.AddTransient<ServiceWithCustomData>(sp => new ("Blazor School"));
-builder.Services.AddTransient<DependentService>(sp => new(sp.GetRequiredService<ServiceWithCustomData>()));
+builder.Services.AddTransient<ServiceWithCustomData>(serviceProvider => new ("Blazor School"));
+builder.Services.AddTransient<DependentService>(serviceProvider => new(serviceProvider.GetRequiredService<ServiceWithCustomData>()));
 
 var app = builder.Build();
 
