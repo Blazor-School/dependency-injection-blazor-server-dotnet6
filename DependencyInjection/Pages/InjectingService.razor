@@ -1,0 +1,10 @@
+﻿@page "/injecting-service"
+@using DependencyInjection.Data
+@using DependencyInjection.Data.ServiceWithInterface
+@inject IServiceInterface ServiceWithInterface
+@*@inject ServiceWithInterface ServiceWithInterface2 This line will cause error*@
+@inject DependentService DependentService
+
+<h3>InjectingService</h3>
+<p>Service with interface: @ServiceWithInterface.ExampleString</p>
+<p>Dependent service: @DependentService.ServiceWithCustomData.ExampleString</p>

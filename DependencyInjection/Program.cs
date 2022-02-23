@@ -1,13 +1,18 @@
 using DependencyInjection.Data;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using DependencyInjection.Data.ServiceScope;
+using DependencyInjection.Data.ServiceWithInterface;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddSingleton<SingletonService>();
+builder.Services.AddScoped<ScopedService>();
+builder.Services.AddTransient<TransientService>();
+builder.Services.AddTransient<IServiceInterface, ServiceWithInterface>();
+builder.Services.AddTransient<ServiceWithCustomData>(sp => new ("Blazor School"));
+builder.Services.AddTransient<DependentService>(sp => new(sp.GetRequiredService<ServiceWithCustomData>()));
 
 var app = builder.Build();
 
@@ -16,7 +21,6 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
 }
-
 
 app.UseStaticFiles();
 
